@@ -1,5 +1,8 @@
 # Lixostream
 
+## Hosting 
+You can open this build project following the http://lixostream.surge.sh/ link
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.6.
 
 ## Development server
