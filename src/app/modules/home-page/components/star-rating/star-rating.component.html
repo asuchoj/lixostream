@@ -1,0 +1,12 @@
+<button mat-icon-button
+        [color]="color"
+        *ngFor="let ratingId of ratingArr"
+        [id]="'star_'+ ratingId"
+        (click)="onClick(ratingId + 1)"
+>
+    <mat-icon [textContent]="showIcon(ratingId)"></mat-icon>
+</button>
+
+<p class="body-2">
+    <span>Your rated {{rating}} / {{starCount}}</span>
+</p>

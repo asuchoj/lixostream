@@ -1,0 +1,42 @@
+@import "../../../../../assets/colors";
+
+.app-card {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.contact-btn {
+  border-radius: 30px;
+  background-color: $color-dark;
+  color: $color-white;
+  padding: 0 30px;
+  margin-top: 15px;
+}
+
+.contact-field {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  resize: none;
+  padding: 10px 15px;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.contact-header {
+  text-align: end;
+  font-size: 26px;
+  color: $color-dark;
+}
+
+.contact-rating-title {
+  font-size: 20px;
+}
+
+.contact-rating-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}

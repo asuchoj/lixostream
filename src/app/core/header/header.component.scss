@@ -1,0 +1,28 @@
+@import "../../../assets/mixins/mixins";
+@import "../../../assets/colors";
+
+.header {
+  height: 70px;
+  background-color: $color-grey;
+  color: $color-dark;
+
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .authorization {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    .signIn-btn {
+      border-radius: 18px;
+      padding: 0 30px;
+    }
+  }
+
+  .menu button{
+    margin: 0 5px;
+  }
+}

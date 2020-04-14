@@ -1,0 +1,11 @@
+@import "../../../assets/colors";
+
+.footer {
+  height: 100px;
+  background-color: $color-grey;
+
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+}

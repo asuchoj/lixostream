@@ -1,0 +1,5 @@
+@mixin maintaining_equal_width ($width, $padding, $margin) {
+  width: $width;
+  margin: $margin;
+  padding: $padding;
+}

@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+@import "assets/custom_material_theme";
+@import "./assets/colors.scss";
+
+@import "assets/mixins/mixins";
+@import "~bootstrap/dist/css/bootstrap.css";
+
+* {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 28px;
+}
+
+button:focus {
+  outline: none;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.article {
+  text-align: justify;
+}
+

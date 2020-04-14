@@ -1,0 +1,42 @@
+<div class="app-card">
+    <h3 class="contact-header">Contact developers</h3>
+
+    <p class="article">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec,
+        mattis ac neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed
+        eleifend tristique, tortor mauris molestie elit, et lacinia ipsum quam nec dui. Quisque nec mauris sit
+        amet elit iaculis pretium sit amet quis magna. Aenean velit odio, elementum in tempus ut, vehicula eu
+        diam. Pellentesque rhoncus aliquam mattis. Ut vulputate eros sed felis sodales nec vulputate justo
+        hendrerit. Vivamus varius pretium ligula, a aliquam odio euismod sit amet. Quisque laoreet sem sit amet
+        orci ullamcorper at ultricies metus viverra. Pellentesque arcu mauris, malesuada quis ornare accumsan,
+        blandit sed diam.
+    </p>
+
+    <div class="row">
+        <div class="col-8">
+        <textarea class="contact-field"
+                  id="story"
+                  name="story"
+                  rows="5"
+                  cols="33"
+                  placeholder="get feedback"
+        ></textarea>
+        </div>
+
+        <div class="col-4 contact-rating-column">
+            <h5 class="contact-rating-title">product rating</h5>
+
+            <app-star-rating [rating]="rating"
+                             [starCount]="starCount"
+                             [color]="starColor"
+                             (ratingUpdated)="onRatingChanged($event)"
+            ></app-star-rating>
+
+            <button mat-button class="contact-btn">Send</button>
+        </div>
+    </div>
+</div>
+
+
+
+
