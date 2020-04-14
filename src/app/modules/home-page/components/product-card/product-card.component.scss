@@ -1,8 +1,8 @@
 @import "../../../../../assets/colors";
 
-.app-card {
-  margin-top: 50px;
-  margin-bottom: 50px;
+.app-card-header {
+  margin: 0;
+  text-align: end;
 }
 
 .product {
@@ -22,10 +22,26 @@
     background-color: $light-gray;
   }
 
-  &-header {
-    font-size: 26px;
-    color: $color-dark;
-    margin: 0;
-    text-align: end;
+  &-icon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+
+    .material-icons {
+      margin: 0 auto;
+      font-size: 40px;
+    }
+  }
+
+  &-title {
+    font-size: 22px;
+    text-align: center;
   }
 }
+
+.second-product {
+  box-shadow: 1px 0 0 $color-grey, -1px 0 0 $color-grey;
+}
+
+

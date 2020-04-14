@@ -1,0 +1,42 @@
+@import "../../../assets/colors";
+
+$loginFormWidth: 450px;
+$r: calc(100% - 450px);
+
+.app-card-header {
+  text-align: center;
+}
+
+.login-page {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  padding: 0 80px;
+}
+
+.login-pictures {
+  height: 100%;
+  background-color: $light-dark;
+}
+
+.login-pictures {
+}
+
+.login-pictures {
+  width: $r;
+}
+
+.login-form-wrap {
+  width: $loginFormWidth;
+}
+
+.forgot-password {
+  text-align: end;
+  color: $light-dark;
+  margin-bottom: 40px;
+}

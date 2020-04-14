@@ -1,8 +1,10 @@
+@import "~bootstrap/dist/css/bootstrap.css";
 @import "assets/custom_material_theme";
-@import "./assets/colors.scss";
+@import "assets/contexts/contexts";
 
 @import "assets/mixins/mixins";
-@import "~bootstrap/dist/css/bootstrap.css";
+@import "assets/buttons/buttons";
+@import "assets/colors.scss";
 
 * {
   margin: 0;
@@ -15,10 +17,25 @@ button:focus {
   outline: none;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
 
-.article {
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+p {
   text-align: justify;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, li {
+  color: $color-dark;
+}
+
+.app-card {
+  margin-top: 100px;
+  margin-bottom: 100px;
 }
 

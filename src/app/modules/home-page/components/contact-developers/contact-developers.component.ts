@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {StarRatingColor} from '../star-rating/star-rating.component';
+import {StarRatingColor} from '../../../../shared/components/star-rating/star-rating.component';
 
 @Component({
     selector: 'app-contact-developers',

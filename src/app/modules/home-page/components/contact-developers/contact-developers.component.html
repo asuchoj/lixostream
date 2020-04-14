@@ -1,7 +1,7 @@
 <div class="app-card">
-    <h3 class="contact-header">Contact developers</h3>
+    <h3 class="app-card-header">Contact developers</h3>
 
-    <p class="article">
+    <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec,
         mattis ac neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed
         eleifend tristique, tortor mauris molestie elit, et lacinia ipsum quam nec dui. Quisque nec mauris sit
@@ -14,25 +14,23 @@
 
     <div class="row">
         <div class="col-8">
-        <textarea class="contact-field"
-                  id="story"
-                  name="story"
-                  rows="5"
-                  cols="33"
-                  placeholder="get feedback"
-        ></textarea>
+            <textarea class="contact-field"
+                      id="story"
+                      name="story"
+                      rows="5"
+                      cols="33"
+                      placeholder="get feedback"
+            ></textarea>
         </div>
 
         <div class="col-4 contact-rating-column">
-            <h5 class="contact-rating-title">product rating</h5>
-
             <app-star-rating [rating]="rating"
                              [starCount]="starCount"
                              [color]="starColor"
                              (ratingUpdated)="onRatingChanged($event)"
             ></app-star-rating>
 
-            <button mat-button class="contact-btn">Send</button>
+            <button mat-button class="app-dark-btn">Send</button>
         </div>
     </div>
 </div>

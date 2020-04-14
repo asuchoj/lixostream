@@ -7,8 +7,10 @@ import {AboutProjectCardComponent} from './components/about-project-card/about-p
 import {ProductCardComponent} from './components/product-card/product-card.component';
 import {StartStreamComponent} from './components/start-stream/start-stream.component';
 import {ContactDevelopersComponent} from './components/contact-developers/contact-developers.component';
-import {StarRatingComponent} from './components/star-rating/star-rating.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatCardModule} from '@angular/material/card';
+import {SharedModule} from '../../shared/shared.module';
+import {HomeRoutingModule} from './home-routing.module';
 
 @NgModule({
     declarations: [
@@ -16,17 +18,19 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
         AboutProjectCardComponent,
         ProductCardComponent,
         StartStreamComponent,
-        ContactDevelopersComponent,
-        StarRatingComponent
+        ContactDevelopersComponent
     ],
     exports: [
         HomePageComponent
     ],
     imports: [
         CommonModule,
+        HomeRoutingModule,
         MatButtonModule,
         MatIconModule,
         MatSnackBarModule,
+        MatCardModule,
+        SharedModule
     ]
 })
 export class HomePageModule {

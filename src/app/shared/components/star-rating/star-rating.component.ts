@@ -9,16 +9,14 @@ export enum StarRatingColor {
 @Component({
     selector: 'app-star-rating',
     templateUrl: './star-rating.component.html',
-    styleUrls: ['./star-rating.component.scss'],
-    encapsulation: ViewEncapsulation.Emulated
+    styleUrls: ['./star-rating.component.scss']
 })
 export class StarRatingComponent implements OnInit {
-    @Input() rating = 3;
+    @Input() rating = 5;
     @Input() starCount = 5;
-    @Input() color = 'accent';
+    @Input() color = 'primary';
     @Output() ratingUpdated = new EventEmitter();
 
-    snackBarDuration = 2000;
     ratingArr = [];
 
     ngOnInit() {

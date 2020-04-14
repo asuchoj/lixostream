@@ -1,9 +1,8 @@
 @import "../../../../../assets/colors";
 
-.app-card {
-  margin-top: 50px;
-  margin-bottom: 50px;
+.app-card-header {margin: 0;}
 
+.app-card {
   &-first-column {
     display: flex;
     flex-direction: column;
@@ -27,22 +26,8 @@
     background-color: $light-dark;
   }
 
-  &-header {
-    font-size: 26px;
-    color: $color-dark;
-    margin: 0;
-  }
-
   &-subheader {
     color: $light-dark;
     font-size: 18px;
-  }
-
-  &-btn {
-    border-radius: 30px;
-    background-color: $color-dark;
-    color: $color-white;
-    padding: 0 30px;
-    margin-top: 15px;
   }
 }
