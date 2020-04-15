@@ -1,0 +1,33 @@
+.stream-box {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.main-window {
+  display: flex;
+  flex-direction: column;
+
+  a {
+    text-align: center;
+  }
+
+  video {
+    flex: 1;
+  }
+}
+
+.windows-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  .windows {
+    display: flex;
+    flex-wrap: wrap;
+
+    video {
+      width: 50%;
+      padding: 10px;
+    }
+  }
+}

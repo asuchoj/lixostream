@@ -6,6 +6,10 @@ const routes: Routes = [
     {
         path: '', component: MainComponent, children: [
             {
+                path: 'stream',
+                loadChildren: () => import('../stream-page/stream-page.module').then(m => m.StreamPageModule),
+            },
+            {
                 path: '',
                 loadChildren: () => import('../home-page/home-page.module').then(m => m.HomePageModule),
             }

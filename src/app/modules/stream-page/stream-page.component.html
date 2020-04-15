@@ -1,0 +1,21 @@
+<div class="container stream-box">
+    <div class="row">
+        <div class="col-7 main-window">
+            <a href="#">Link for connecting with another people</a>
+
+            <video controls="controls">
+                <source src="#" type='video/ogg; codecs="theora, vorbis"'>
+            </video>
+        </div>
+
+        <div class="col-5 windows-block">
+            <button mat-button class="app-dark-btn">Закрыть</button>
+
+            <div class="windows">
+                <video *ngFor="let i of [1,2,3,4,5,6,7,8]" controls="controls" [id]="i">
+                    <source src="#" type='video/ogg; codecs="theora, vorbis"'>
+                </video>
+            </div>
+        </div>
+    </div>
+</div>
