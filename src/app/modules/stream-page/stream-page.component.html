@@ -1,26 +1,48 @@
 <div class="container stream-box">
-    <button  class="app-dark-btn"
-             mat-button
-             (click)="beginStream(yourVideo, theirVideo)"
-    >Начать</button>
+    <div class="row">
+        <input type="text" [(ngModel)]="localUserName">
+        <button class="app-dark-btn"
+                mat-button
+                (click)="setLocalUSerName(theirVideo, yourVideo)"
+        >Ввести имя инициатора стрима и начать стрим</button>
+
+        <input type="text" [(ngModel)]="remoteUserName">
+        <button class="app-dark-btn"
+                mat-button
+                (click)="setRemoteName()"
+        >Имя подключаемого</button>
+
+        <button  class="app-dark-btn" mat-button (click)="setLocalUSerName(yourVideo, theirVideo)">Начать</button>
+        <button class="app-dark-btn" mat-button>Закрыть</button>
+    </div>
 
     <div class="row">
-        <div class="col-7 main-window">
-            <a href="#">Link for connecting with another people</a>
+        <video class="col-3" controls="controls" autoplay playsinline #theirVideo></video>
 
-            <video autoplay playsinline #yourVideo></video>
-        </div>
-
-        <div class="col-5 windows-block">
-            <button mat-button class="app-dark-btn">Закрыть</button>
-
-            <div class="windows">
-                <video autoplay playsinline #theirVideo></video>
-
-                <video *ngFor="let i of [1,2,3,4,5,6,7]" controls="controls" [id]="i">
-                    <source src="#" type='video/ogg; codecs="theora, vorbis"'>
-                </video>
-            </div>
-        </div>
+        <video class="col-9" controls="controls" autoplay playsinline #yourVideo></video>
     </div>
+
+
+
+<!--    <button  class="app-dark-btn" mat-button>Начать</button>-->
+
+<!--    <div class="row">-->
+<!--        <div class="col-7 main-window">-->
+<!--            <a href="#">Link for connecting with another people</a>-->
+
+<!--            <video controls="controls">-->
+<!--                <source src="#" type='video/ogg; codecs="theora, vorbis"'>-->
+<!--            </video>-->
+<!--        </div>-->
+
+<!--        <div class="col-5 windows-block">-->
+<!--            <button mat-button class="app-dark-btn">Закрыть</button>-->
+
+<!--            <div class="windows">-->
+<!--                <video *ngFor="let i of [1,2,3,4,5,6,7,8]" controls="controls" [id]="i">-->
+<!--                    <source src="#" type='video/ogg; codecs="theora, vorbis"'>-->
+<!--                </video>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 </div>

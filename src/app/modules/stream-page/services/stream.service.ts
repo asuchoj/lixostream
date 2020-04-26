@@ -1,16 +1,18 @@
 import {Injectable} from '@angular/core';
 
+export const URL = 'ws://localhost:8888';
 @Injectable()
 export class StreamService {
+    private connection;
+    private connectedUser: string;
     private MediaStreamConstraints: MediaStreamConstraints = {
         video: true,
-        audio: true
+        audio: false
     };
-    private OfferOptions: RTCOfferOptions = {
-        offerToReceiveVideo: true
-    };
-    private _localPeerConnection: RTCPeerConnection;
-    private _remotePeerConnection: RTCPeerConnection;
+    private localPeerConnection: RTCPeerConnection;
+    private remotePeerConnection: RTCPeerConnection;
+    private localVideo: HTMLVideoElement;
+    private remoteVideo: HTMLVideoElement;
 
     static hasUserMedia(): boolean {
         return !!navigator.getUserMedia;
@@ -24,74 +26,131 @@ export class StreamService {
         video.srcObject = mediaStream;
     }
 
-    beginStream(localVideo: HTMLVideoElement, remoteVideo: HTMLVideoElement): void {
+    constructor() {
+        this.initiateWebSocket(URL);
+    }
+
+    startConnection(): void {
         if (StreamService.hasUserMedia()) {
             navigator.mediaDevices.getUserMedia(this.MediaStreamConstraints)
-                .then((mediaStream) => this._gotLocalMediaStream(mediaStream, localVideo, remoteVideo));
+                .then((mediaStream) => this.gotLocalMediaStream(mediaStream, this.localVideo, this.remoteVideo));
         } else {
             alert('Sorry, your browser does not support WebRTC.');
         }
     }
 
-    private _gotLocalMediaStream(mediaStream: MediaStream, localVideo: HTMLVideoElement, removeVideo: HTMLVideoElement): void {
+    private gotLocalMediaStream(mediaStream: MediaStream, localVideo: HTMLVideoElement, removeVideo: HTMLVideoElement): void {
         StreamService.setVideoStream(mediaStream, localVideo);
 
         if (StreamService.hasRTCPeerConnection()) {
-            this._callAction(mediaStream, removeVideo);
+            this.setupPeerConnection(mediaStream, removeVideo);
         } else {
             alert('Sorry, your browser does not support WebRTC.');
         }
     }
 
-    private _callAction(mediaStream: MediaStream, remoteVideo: HTMLVideoElement): void {
-        this._localPeerConnection = new RTCPeerConnection();
-        this._remotePeerConnection = new RTCPeerConnection();
-
-        this._localPeerConnection.addEventListener(
-            'icecandidate',
-            (event: RTCPeerConnectionIceEvent) => this._handleConnection(event)
-        );
-
-        this._remotePeerConnection.addEventListener(
-            'icecandidate',
-            (event: RTCPeerConnectionIceEvent) => this._handleConnection(event)
-        );
-
-        this._remotePeerConnection.addEventListener(
-            'addstream',
-            (event: MediaStreamEvent) => StreamService.setVideoStream(event.stream, remoteVideo)
-        );
-
-        mediaStream.getTracks().forEach((track: MediaStreamTrack) => this._localPeerConnection.addTrack(track, mediaStream));
-
-        this._localPeerConnection
-            .createOffer(this.OfferOptions)
-            .then(description => this._createdOffer(description));
+    onAnswer(answer) {
+        this.localPeerConnection.setRemoteDescription(new RTCSessionDescription(answer));
     }
 
-    private _handleConnection(event: RTCPeerConnectionIceEvent): void {
-        const peerConnection = event.target;
-        const iceCandidate = event.candidate;
+    setLocalLoginName(name: string, localVideo: HTMLVideoElement, remoteVideo: HTMLVideoElement) {
+        this.localVideo = localVideo;
+        this.remoteVideo = remoteVideo;
 
-        if (iceCandidate) {
-            const newIceCandidate = new RTCIceCandidate(iceCandidate);
-            const otherPeer = this._getOtherPeer(peerConnection);
-            otherPeer.addIceCandidate(newIceCandidate);
+        name.length ? this.send({type: 'login', name}) : alert('Name is pure. Enter correct name');
+    }
+
+    send(message: any) {
+        if (this.connectedUser) {
+            message.name = this.connectedUser;
+        }
+        this.connection.send(JSON.stringify(message));
+    }
+
+    onLogin(success) {
+        if (success === false) {
+            alert('Login unsuccessful, please try a different name.');
+        } else {
+            this.startConnection();
         }
     }
 
-    private _getOtherPeer(peerConnection: EventTarget): RTCPeerConnection {
-        return (peerConnection === this._localPeerConnection) ? this._remotePeerConnection : this._localPeerConnection;
+    onOffer(offer, name) {
+        this.connectedUser = name;
+        this.localPeerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+        this.localPeerConnection.createAnswer()
+            .then(answer => {
+                console.log(answer);
+                this.localPeerConnection.setLocalDescription(answer);
+                this.send({type: 'answer', answer});
+            })
+            .catch((error) => alert('An error has occurred'));
     }
 
-    private _createdOffer(description: RTCSessionDescriptionInit): void {
-        this._localPeerConnection.setLocalDescription(description);
-        this._remotePeerConnection.setRemoteDescription(description);
-        this._remotePeerConnection.createAnswer().then(d => this._createdAnswer(d));
+    onCandidate(candidate) {
+        this.localPeerConnection.addIceCandidate(new RTCIceCandidate(candidate));
     }
 
-    private _createdAnswer(description: RTCSessionDescriptionInit): void {
-        this._remotePeerConnection.setLocalDescription(description);
-        this._localPeerConnection.setRemoteDescription(description);
+    onLeave() {
+        this.connectedUser = null;
+        this.remoteVideo.src = null;
+        this.localPeerConnection.close();
+        this.remotePeerConnection.onicecandidate = null;
+        this.remotePeerConnection.ontrack = null;
+    }
+
+    setupPeerConnection(stream, remoteVideo: HTMLVideoElement) {
+        this.localPeerConnection = new RTCPeerConnection();
+        stream.getTracks().forEach((track: MediaStreamTrack) => this.localPeerConnection.addTrack(track, stream));
+        this.localPeerConnection.ontrack = (e) => remoteVideo.srcObject = e.streams[0];
+
+        this.localPeerConnection.onicecandidate = (event) => {
+            if (event.candidate) {
+                this.send({type: 'candidate', candidate: event.candidate});
+            }
+        };
+    }
+
+    startPeerConnection(user: string): void {
+        this.connectedUser = user;
+        this.localPeerConnection.createOffer()
+            .then(offer => {
+                this.send({type: 'offer', offer});
+                this.localPeerConnection.setLocalDescription(offer);
+            })
+            .catch((error) => alert('An error has occurred'));
+    }
+
+    initiateWebSocket(url: string) {
+        this.connection = new WebSocket(url);
+        this.connection.onopen = () => console.log('Connected');
+        this.connection.onerror = (err) => console.log('Got error', err);
+
+        this.connection.onmessage = (message) => {
+            console.log('Got message', message.data);
+
+            const data = JSON.parse(message.data);
+
+            switch (data.type) {
+                case 'login':
+                    this.onLogin(data.success);
+                    break;
+                case 'offer':
+                    this.onOffer(data.offer, data.name);
+                    break;
+                case 'answer':
+                    this.onAnswer(data.answer);
+                    break;
+                case 'candidate':
+                    this.onCandidate(data.candidate);
+                    break;
+                case 'leave':
+                    this.onLeave();
+                    break;
+                default:
+                    break;
+            }
+        };
     }
 }
+
