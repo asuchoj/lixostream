@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 
-export const URL = 'ws://localhost:8888'.replace(/^http/, 'ws');
+export const URL = 'wss://192.168.1.5:8888'.replace(/^https/, 'wss');
 @Injectable()
 export class StreamService {
     private connection;
